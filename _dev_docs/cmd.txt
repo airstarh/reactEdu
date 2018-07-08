@@ -1,8 +1,18 @@
-https://reactjs.org/docs/add-react-to-a-website.html
+//region w/001-simplest-jsx-babel
+@link https://reactjs.org/docs/add-react-to-a-website.html
 npm init -y
 npm install babel-cli@6 babel-preset-react-app@3
 
 Create a folder called src and run this terminal command:
 npx babel --watch src --out-dir . --presets react-app/prod
+//endregion w/001-simplest-jsx-babel
+
+//region New React App
+@link https://reactjs.org/docs/create-a-new-react-app.html
+
+npx create-react-app my-app
+cd my-app
+npm start
 
 
+//endregion New React App
