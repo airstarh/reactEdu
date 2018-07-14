@@ -14,5 +14,10 @@ npx create-react-app my-app
 cd my-app
 npm start
 
-
 //endregion New React App
+
+//region Tutorial: Intro to React
+https://reactjs.org/tutorial/tutorial.html#setup-for-the-tutorial
+
+//endregion Tutorial: Intro to React
+
