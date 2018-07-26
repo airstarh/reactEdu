@@ -16,10 +16,18 @@ import registerServiceWorker from './registerServiceWorker';
 //region Tutorial: Intro to React
 // https://reactjs.org/tutorial/tutorial.html#setup-for-the-tutorial
 class Square extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			value: null,
+		};
+	}
+
 	render() {
 		return (
-			<button className="square">
-				{/* TODO */}
+			<button className="square" onClick={()=>{ console.log(this.props);}}>
+				{this.props.value}
 			</button>
 		);
 	}
