@@ -112,6 +112,9 @@ class Game extends React.Component {
 			);
 		});
 
+		console.log("moves ++++++++++");
+		console.log(moves);
+
 		let status;
 		if (winner) {
 			status = "Winner: " + winner;
