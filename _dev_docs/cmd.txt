@@ -12,6 +12,7 @@ npx babel --watch src --out-dir . --presets react-app/prod
 
 npx create-react-app my-app
 cd my-app
+F:
 cd F:\_REPO\reactEdu\my-app
 npm start
 

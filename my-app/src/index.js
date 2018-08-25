@@ -4,9 +4,68 @@ import './index.css';
 import App                   from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import {Ajax}  from './services/ajax'
+import {Tr}    from "./elements/tr";
+import {Table} from "./elements/table";
 // ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
 
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+class Query extends React.Component {
+
+	q = {
+		url:       "http://alinazero/alinaRestAccept",
+		getParams: {cmd: "model", m: "user", p: 1, ps: 5}
+	};
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			response: {
+				data: []
+			},
+		};
+	}
+
+	componentDidMount() {
+		this.fetch();
+	}
+
+	fetch() {
+		const _this = this;
+		new Ajax(this.q)
+			.get()
+			.then(
+				(r) => {
+					_this.setState({response: r,});
+				},
+				(error) => {
+					console.log("error ++++++++++");
+					console.log(error);
+				}
+			)
+
+	}
+
+
+	render() {
+
+		console.log("Q render ++++++++++");
+		console.log(this.state.response.data);
+
+		return (
+			<div>
+				<Table data={this.state.response.data}/>
+			</div>
+		);
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -113,6 +172,6 @@ class Calculator extends React.Component {
 }
 
 ReactDOM.render(
-	<Calculator/>,
+	<Query/>,
 	document.getElementById('root')
 );
