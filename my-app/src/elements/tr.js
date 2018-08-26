@@ -13,6 +13,21 @@ export class Tr extends React.Component {
 		};
 	}
 
+	static getDerivedStateFromProps(props, state) {
+		let statusChanged = false;
+		const toReturn = {};
+		if (props.model !== state.model) {
+			statusChanged = true;
+			toReturn.model = props.model
+		}
+		if (props.fields !== state.fields) {
+			statusChanged = true;
+			toReturn.fields = props.fields
+		}
+		return statusChanged ? toReturn : null;
+	}
+
+
 	render() {
 
 		const fields     = this.state.fields;
@@ -20,6 +35,8 @@ export class Tr extends React.Component {
 		const even_odd   = this.props.even_odd % 2 === 0 ? 'even' : 'odd';
 		const isSubTable = this.props.isSubTable;
 
+		// console.log("TR RENDER ++++++++++");
+		// console.log(model);
 
 		let tpl = (
 			<tr className={even_odd}>

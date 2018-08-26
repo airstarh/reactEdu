@@ -1,12 +1,12 @@
+// import App                   from './App';
+// import registerServiceWorker from './registerServiceWorker';
 import React                 from 'react';
 import ReactDOM              from 'react-dom';
 import './index.css';
-import App                   from './App';
-import registerServiceWorker from './registerServiceWorker';
+import {Ajax}              from './services/ajax'
+import {Table}             from "./elements/table";
+import {SelectSimpleArray} from "./elements/sekect-simple-array";
 
-import {Ajax}  from './services/ajax'
-import {Tr}    from "./elements/tr";
-import {Table} from "./elements/table";
 // ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
 
@@ -28,6 +28,15 @@ class Query extends React.Component {
 		}
 	};
 
+	models       = [
+		'user',
+		'article',
+		'hero',
+		'role',
+		'user_role',
+	];
+	modelCurrent = 'user';
+
 	constructor(props) {
 		super(props);
 
@@ -36,9 +45,21 @@ class Query extends React.Component {
 				data: []
 			},
 		};
+
+		this.handleChangeModels = this.handleChangeModels.bind(this);
 	}
 
 	componentDidMount() {
+		this.fetch();
+	}
+
+	handleChangeModels(event) {
+		this.state = {
+			response: {
+				data: []
+			},
+		};
+		this.modelCurrent = this.q.getParams.m = event.target.value;
 		this.fetch();
 	}
 
@@ -47,6 +68,10 @@ class Query extends React.Component {
 			.get()
 			.then(
 				(r) => {
+
+					console.log("response ++++++++++");
+					console.log(r);
+
 					this.setState({response: r,});
 				},
 				(error) => {
@@ -54,16 +79,17 @@ class Query extends React.Component {
 					console.log(error);
 				}
 			)
-
 	}
 
 
 	render() {
-
 		const data = this.state.response.data;
 		const meta = this.state.response.meta;
 		return (
 			<div>
+				<div>
+					<SelectSimpleArray arr={this.models} sel={this.modelCurrent} onChangeValue={this.handleChangeModels}/>
+				</div>
 				<Table data={data}/>
 			</div>
 		);

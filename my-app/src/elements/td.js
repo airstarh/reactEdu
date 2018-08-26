@@ -10,6 +10,21 @@ export class Td extends React.Component {
 		};
 	}
 
+	static getDerivedStateFromProps(props, state) {
+		let statusChanged = false;
+		const toReturn = {};
+		if (props.model !== state.model) {
+			statusChanged = true;
+			toReturn.model = props.model
+		}
+		if (props.fieldName !== state.fieldName) {
+			statusChanged = true;
+			toReturn.fieldName = props.fieldName
+		}
+		return statusChanged ? toReturn : null;
+	}
+
+
 	render() {
 
 		const m = this.state.model;

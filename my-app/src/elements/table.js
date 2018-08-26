@@ -17,7 +17,19 @@ export class Table extends React.Component {
 	 * https://stackoverflow.com/questions/49449527/why-use-getderivedstatefromprops-instead-of-componentdidupdate
 	 * */
 	static getDerivedStateFromProps(props, state) {
+
+		// if (!isSubTable) {
+		// 	console.log("++++++++++ getDerivedStateFromProps props");
+		// 	console.log(props);
+		// }
+
 		if (props.data !== state.data) {
+
+			// if (!isSubTable) {
+			// 	console.log("++++++++++ CHANGING STATE getDerivedStateFromProps props");
+			// 	console.log(props.data);
+			// }
+
 			return {
 				data: props.data
 			};
@@ -28,12 +40,18 @@ export class Table extends React.Component {
 	}
 
 	render() {
-		const data = this.state.data;
+		const data       = this.state.data || [];
+		const isSubTable = this.props.isSubTable;
+
+		// if (!isSubTable) {
+		// 	console.log("RENDER TABLE ++++++++++");
+		// 	console.log(data);
+		// }
+
 		let fields = [];
 		if (data[0]) {
 			fields = Object.keys(data[0]);
 		}
-		const isSubTable = this.props.isSubTable;
 
 		let tpl = (
 			<table border="1" cellPadding="5" cellSpacing="0">
@@ -52,13 +70,13 @@ export class Table extends React.Component {
 					}
 				</tr>
 
-				 <tr>
-					 <td>&nbsp;</td>
-					 {
-						 fields.map((h, i) =>
-							            <th key={i}><input type="text" name={h}/></th>)
-					 }
-				 </tr>
+				<tr>
+					<td>&nbsp;</td>
+					{
+						fields.map((h, i) =>
+							           <th key={i}><input type="text" name={h}/></th>)
+					}
+				</tr>
 				</thead>
 				<tbody>
 				{
@@ -84,7 +102,8 @@ export class Table extends React.Component {
 					</thead>
 					<tbody>
 					{
-						data.map((m, i) => <Tr key={m.id} model={m} fields={fields} even_odd={i} isSubTable={isSubTable}/>)
+						data.map((m, i) => <Tr key={m.id} model={m} fields={fields} even_odd={i}
+						                       isSubTable={isSubTable}/>)
 					}
 					</tbody>
 				</table>
