@@ -22,7 +22,7 @@ export class Td extends React.Component {
 			}
 			return (
 				<td>
-					<Table data={v}/>
+					<Table isSubTable={true} data={v}/>
 				</td>
 			);
 

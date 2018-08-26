@@ -68,3 +68,16 @@ ol, ul {
 /******************************************************/
 /******************************************************/
 /******************************************************/
+
+table thead
+{
+  color: white;
+  background-color: black;
+}
+
+table tbody tr.even{
+  background-color: #d4d4d4;
+}
+table tbody tr.odd{
+  background-color: #eefeca;
+}

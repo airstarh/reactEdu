@@ -8,22 +8,38 @@ export class Tr extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			model: this.props.model,
+			model:  this.props.model,
+			fields: this.props.fields,
 		};
-		this.organizeFields();
-	}
-
-	organizeFields() {
-		this.fields = Object.keys(this.state.model);
 	}
 
 	render() {
-		return (
-			<tr>
-				{this.fields.map((f, i) => {
-					return <Td key={i} model={this.state.model} fieldName={f}/>
-				})}
+
+		const fields     = this.state.fields;
+		const model      = this.state.model;
+		const even_odd   = this.props.even_odd % 2 === 0 ? 'even' : 'odd';
+		const isSubTable = this.props.isSubTable;
+
+
+		let tpl = (
+			<tr className={even_odd}>
+				<td>
+					<button>E</button>
+					<button>S</button>
+					<button>D</button>
+				</td>
+				{fields.map((f, i) => <Td key={i} model={model} fieldName={f}/>)}
 			</tr>
 		);
+
+		if (isSubTable) {
+			tpl = (
+				<tr className={even_odd}>
+					{fields.map((f, i) => <Td key={i} model={model} fieldName={f}/>)}
+				</tr>
+			);
+		}
+
+		return tpl;
 	}
 }

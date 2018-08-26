@@ -20,7 +20,12 @@ class Query extends React.Component {
 
 	q = {
 		url:       "http://alinazero/alinaRestAccept",
-		getParams: {cmd: "model", m: "user", p: 1, ps: 5}
+		getParams: {
+			cmd: "model",
+			m:   "user",
+			p:   1,
+			ps:  5
+		}
 	};
 
 	constructor(props) {
@@ -38,7 +43,6 @@ class Query extends React.Component {
 	}
 
 	fetch() {
-		const _this = this;
 		new Ajax(this.q)
 			.get()
 			.then(
@@ -57,10 +61,7 @@ class Query extends React.Component {
 	render() {
 
 		const data = this.state.response.data;
-
-		console.log("Q render ++++++++++");
-		console.log(data);
-
+		const meta = this.state.response.meta;
 		return (
 			<div>
 				<Table data={data}/>
