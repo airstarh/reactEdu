@@ -43,7 +43,7 @@ class Query extends React.Component {
 			.get()
 			.then(
 				(r) => {
-					_this.setState({response: r,});
+					this.setState({response: r,});
 				},
 				(error) => {
 					console.log("error ++++++++++");
@@ -56,12 +56,14 @@ class Query extends React.Component {
 
 	render() {
 
+		const data = this.state.response.data;
+
 		console.log("Q render ++++++++++");
-		console.log(this.state.response.data);
+		console.log(data);
 
 		return (
 			<div>
-				<Table data={this.state.response.data}/>
+				<Table data={data}/>
 			</div>
 		);
 	}

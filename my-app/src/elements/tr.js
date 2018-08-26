@@ -18,16 +18,10 @@ export class Tr extends React.Component {
 	}
 
 	render() {
-
-		console.log("Tr RENDER ++++++++++");
-		console.log(this.fields);
-
-		//return (<tr>0</tr>);
-
 		return (
 			<tr>
-				{this.fields.map((f) => {
-					return <Td model={this.state.model} fieldName={f}/>
+				{this.fields.map((f, i) => {
+					return <Td key={i} model={this.state.model} fieldName={f}/>
 				})}
 			</tr>
 		);
