@@ -54,11 +54,6 @@ class Query extends React.Component {
 	}
 
 	handleChangeModels(event) {
-		this.state = {
-			response: {
-				data: []
-			},
-		};
 		this.modelCurrent = this.q.getParams.m = event.target.value;
 		this.fetch();
 	}
