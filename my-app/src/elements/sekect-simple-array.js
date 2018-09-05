@@ -8,6 +8,9 @@ export class SelectSimpleArray extends React.Component {
 	}
 
 	onChangeValue(e){
+		console.log("SELECTION CHANGED ++++++++++");
+		console.log(e.target.name);
+		console.log(e.target.value);
 		this.props.onChangeValue(e);
 	}
 
@@ -16,7 +19,11 @@ export class SelectSimpleArray extends React.Component {
 		const sel = this.props.sel;
 
 		return (
-			<select name="model" value={sel} onChange={this.onChangeValue}>
+			<select
+				name={this.props.theName ? this.props.theName : "model"}
+				value={sel}
+				onChange={this.onChangeValue}
+			>
 				{arr.map((e,i)=> <option key={i} value={e}>{e}</option>)}
 			</select>
 		);

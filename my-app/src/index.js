@@ -1,11 +1,12 @@
 // import App                   from './App';
 // import registerServiceWorker from './registerServiceWorker';
-import React                 from 'react';
-import ReactDOM              from 'react-dom';
+import React               from 'react';
+import ReactDOM            from 'react-dom';
 import './index.css';
 import {Ajax}              from './services/ajax'
 import {Table}             from "./elements/table";
 import {SelectSimpleArray} from "./elements/sekect-simple-array";
+import {Pager}             from "./elements/pager";
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
@@ -47,6 +48,7 @@ class Query extends React.Component {
 		};
 
 		this.handleChangeModels = this.handleChangeModels.bind(this);
+		this.handlePager        = this.handlePager.bind(this);
 	}
 
 	componentDidMount() {
@@ -56,6 +58,19 @@ class Query extends React.Component {
 	handleChangeModels(event) {
 		this.modelCurrent = this.q.getParams.m = event.target.value;
 		this.fetch();
+	}
+
+	handlePager(e) {
+		if (e.Pager) {
+			if (e.Pager.pageCurrentNumber) {
+				this.q.getParams.p = e.Pager.pageCurrentNumber
+			}
+			if (e.Pager.pageSize) {
+				this.q.getParams.p  = 1;
+				this.q.getParams.ps = e.Pager.pageSize
+			}
+			this.fetch();
+		}
 	}
 
 	fetch() {
@@ -78,12 +93,23 @@ class Query extends React.Component {
 
 
 	render() {
-		const data = this.state.response.data;
-		const meta = this.state.response.meta;
+		const data              = this.state.response.data;
+		const meta              = this.state.response.meta || {};
+		//region Pager
+		const pageCurrentNumber = meta.pageCurrentNumber || this.q.getParams.p;
+		const pageSize          = meta.pageSize || this.q.getParams.ps;
+		const rowsTotal         = meta.rowsTotal || 0;
+		//endregion Pager
+
 		return (
 			<div>
 				<div>
-					<SelectSimpleArray arr={this.models} sel={this.modelCurrent} onChangeValue={this.handleChangeModels}/>
+					<SelectSimpleArray arr={this.models} sel={this.modelCurrent}
+					                   onChangeValue={this.handleChangeModels}/>
+				</div>
+				<div>
+					<Pager pageCurrentNumber={pageCurrentNumber} pageSize={pageSize} rowsTotal={rowsTotal}
+					       onChangePage={this.handlePager}/>
 				</div>
 				<Table data={data}/>
 			</div>

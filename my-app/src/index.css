@@ -81,3 +81,8 @@ table tbody tr.even{
 table tbody tr.odd{
   background-color: #eefeca;
 }
+
+.pager .current {
+    color: #fff;
+    background-color: #000;
+}
