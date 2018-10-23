@@ -1,5 +1,6 @@
-import React from 'react';
-import {Tr}  from "./tr";
+import React     from 'react';
+import PropTypes from 'prop-types';
+import {Tr}      from "./tr";
 
 export class Table extends React.Component {
 	state = {
@@ -8,6 +9,7 @@ export class Table extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.handleChangeSearchField = this.handleChangeSearchField.bind(this);
 	}
 
 	/**
@@ -39,6 +41,18 @@ export class Table extends React.Component {
 		return null;
 	}
 
+	handleChangeSearchField(e) {
+		e.persist();
+		e            = e.nativeEvent;
+		const fName  = e.target.name;
+		const fValue = e.target.value;
+
+		this.props.onChangeSearchField(fName, fValue);
+
+		console.log("handleChangeSearchField ++++++++++");
+		console.log(e);
+	}
+
 	render() {
 		const data       = this.state.data || [];
 		const isSubTable = this.props.isSubTable;
@@ -54,18 +68,18 @@ export class Table extends React.Component {
 		}
 
 		let tpl = (
-			<table border="1" cellPadding="5" cellSpacing="0">
+			<table border="1" cellPadding="2" cellSpacing="0">
 				<thead>
 				<tr>
 
 					<td>ACTIONS</td>
 					{
 						fields.map((h, i) =>
-							           <th key={i}>
-								           <button>&lt;</button>
-								           {h}
-								           <button>&gt;</button>
-							           </th>
+							<th key={i}>
+								<button>&lt;</button>
+								{h}
+								<button>&gt;</button>
+							</th>
 						)
 					}
 				</tr>
@@ -74,7 +88,22 @@ export class Table extends React.Component {
 					<td>&nbsp;</td>
 					{
 						fields.map((h, i) =>
-							           <th key={i}><input type="text" name={h}/></th>)
+							<th key={i}>
+								<div>
+									<input type="text" name={`lk_${h}`} placeholder=''
+									       onChange={this.handleChangeSearchField}
+									/>
+								</div>
+								<div>
+									<input type="text" name={`gt_${h}`} placeholder="&gt;"
+									       onChange={this.handleChangeSearchField}/>
+								</div>
+								<div>
+									<input type="text" name={`lt_${h}`} placeholder="&lt;"
+									       onChange={this.handleChangeSearchField}/>
+								</div>
+
+							</th>)
 					}
 				</tr>
 				</thead>
@@ -88,14 +117,14 @@ export class Table extends React.Component {
 
 		if (isSubTable) {
 			tpl = (
-				<table border="1" cellPadding="5" cellSpacing="0">
+				<table border="1" cellPadding="2" cellSpacing="0">
 					<thead>
 					<tr>
 						{
 							fields.map((h, i) =>
-								           <th key={i}>
-									           {h}
-								           </th>
+								<th key={i}>
+									{h}
+								</th>
 							)
 						}
 					</tr>
@@ -112,3 +141,9 @@ export class Table extends React.Component {
 		return tpl;
 	}
 }
+
+Table.propTypes = {
+	data:                PropTypes.array,
+	onChangeSearchField: PropTypes.func,
+	isSubTable:          PropTypes.bool,
+};
